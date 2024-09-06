@@ -20,7 +20,7 @@ from goods.views import *
 from rest_framework import routers
 
 router = routers.SimpleRouter()
-router.register(r'goods', GoodsViewSet)
+router.register(r'goods', GoodsViewSet, basename='goods')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Categories(models.Model):
     name = models.CharField(max_length=150, unique=True)
@@ -10,4 +11,5 @@ class Products(models.Model):
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
     category = models.ForeignKey(to=Categories, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 

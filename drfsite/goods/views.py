@@ -3,12 +3,26 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Products
+from rest_framework.decorators import action
+from .models import Products, Categories
 from .serializers import ProductsSerializer
 
 class GoodsViewSet(viewsets.ModelViewSet):
-    queryset = Products.objects.all()
+    # queryset = Products.objects.all()
     serializer_class = ProductsSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+
+        if not pk:
+            return Products.objects.all()[:3]
+        
+        return Products.objects.filter(pk=pk)
+
+    @action(methods=['get'], detail=True)
+    def category(self, request, pk=None):
+        cats = Categories.objects.get(pk=pk)
+        return Response({'cats': [cats.name]})
 
 # class GoodsAPIList(generics.ListCreateAPIView):
 #     queryset = Products.objects.all()
