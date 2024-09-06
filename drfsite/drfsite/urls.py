@@ -19,13 +19,9 @@ from django.urls import include, path
 from goods.views import *
 from rest_framework import routers
 
-router = routers.SimpleRouter()
-router.register(r'goods', GoodsViewSet, basename='goods')
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(router.urls)),
-	# path('api/v1/goodslist', GoodsViewSet.as_view({'get': 'list'})),
-	# path('api/v1/goodslist/<int:pk>', GoodsViewSet.as_view({'put': 'update'})),
-    # path('api/v1/goodsdetail/<int:pk>', GoodsViewSet.as_view({'delete': 'destroy'})),
+	path('api/v1/goods/', GoodsAPIList.as_view()),
+	path('api/v1/goods/<int:pk>', GoodsAPIUpdate.as_view()),
+    path('api/v1/goodsdelete/<int:pk>', GoodsAPIDestroy.as_view()),
 ]
